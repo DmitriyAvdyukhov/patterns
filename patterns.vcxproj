@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="adapter_wrapper.h" />
     <ClInclude Include="factory_method.h" />
     <ClInclude Include="builder.h" />
     <ClInclude Include="object_pool.h" />

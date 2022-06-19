@@ -4,12 +4,14 @@
 #include "factory_method.h"
 #include "builder.h"
 #include "object_pool.h"
+#include "adapter_wrapper.h"
 
 int main()
 {
-	TestSingleton();
+	/*TestSingleton();
 	TestFactoryMethod();
 	TestBuilder();
-	TestObjectPool();
+	TestObjectPool();*/
+	TestAdapter();
 	return 0;
 }
