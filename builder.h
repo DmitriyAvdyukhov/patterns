@@ -38,6 +38,7 @@ public:
 	{
 		return elephants_;
 	}
+
 private:
 	std::vector<Infantryman> infantrymen_;
 	std::vector<Archer> archers_;
@@ -75,22 +76,22 @@ public:
 
 	void CreateInfantryman() override
 	{
-		army_ptr_->GetInfantrymans().push_back(Infantryman());
+		army_ptr_->GetInfantrymans() = { 10, Infantryman() };
 	}
 
 	void CreateArcher() override
 	{
-		army_ptr_->GetArchers().push_back(Archer());
+		army_ptr_->GetArchers() = { 10, Archer() };
 	}
 
 	void CreateHorseman() override
 	{
-		army_ptr_->GetHosemen().push_back(Horseman());
+		army_ptr_->GetHosemen() = { 10, Horseman() };
 	}
 
 	void CreateCatapult() override
 	{
-		army_ptr_->GetCatapults().push_back(Catapult());
+		army_ptr_->GetCatapults() = { 5, Catapult() };
 	}	
 };
 
@@ -103,22 +104,22 @@ public:
 	}
 	void CreateInfantryman() override
 	{
-		army_ptr_->GetInfantrymans().push_back(Infantryman());
+		army_ptr_->GetInfantrymans() = { 10, Infantryman() };
 	}
 
 	void CreateArcher() override
 	{
-		army_ptr_->GetArchers().push_back(Archer());
+		army_ptr_->GetArchers() = { 10, Archer() };
 	}
 
 	void CreateHorseman() override
 	{
-		army_ptr_->GetHosemen().push_back(Horseman());
+		army_ptr_->GetHosemen() = { 5, Horseman() };
 	}
 
 	void CreateElephant() override
 	{
-		army_ptr_->GetElephants().push_back(Elephant());
+		army_ptr_->GetElephants() = { 5, Elephant() };
 	}
 };
 
@@ -150,4 +151,6 @@ void TestBuilder()
 	std::cout << "Carthagen army: ";
 	carthagen_army->Info();
 	std::cout << std::endl;		
+
+	std::cout << "Test Builder is Ok" << std::endl;
 }

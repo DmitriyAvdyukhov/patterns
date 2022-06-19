@@ -119,10 +119,7 @@ public:
 			}
 		}
 	}
-	void AddWarior()
-	{
-
-	}
+	
 	std::vector<Warrior_ptr> GetWarriors() const
 	{
 		return warriors_;
@@ -152,4 +149,6 @@ void TestFactoryMethod()
 	{
 		warrior->Info();
 	}
+
+	std::cout << "Test FactoryMethod is Ok" << std::endl;
 }

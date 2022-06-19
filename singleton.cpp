@@ -135,6 +135,8 @@ void TestSingleton()
 	std::cout << m1->GetName() << std::endl;
 	std::cout << m2->GetName() << std::endl;
 	m1->Destroy("qwe");
+
+	std::cout << "Test Singleton is Ok" << std::endl;
 }
 
 
