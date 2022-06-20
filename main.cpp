@@ -5,6 +5,7 @@
 #include "builder.h"
 #include "object_pool.h"
 #include "adapter_wrapper.h"
+#include "prototype.h"
 
 int main()
 {
@@ -12,6 +13,7 @@ int main()
 	TestFactoryMethod();
 	TestBuilder();
 	TestObjectPool();*/
-	TestAdapter();
+	//TestAdapter();
+	TestPrototype();
 	return 0;
 }

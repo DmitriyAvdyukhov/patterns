@@ -14,10 +14,12 @@ namespace classic_adapter
 			tem_ = tem;
 			return *this;
 		}
+
 		float GetFahrengheitTemp()
 		{
 			return tem_;
 		}
+
 	private:
 		float tem_ = 32.;
 	};
@@ -41,6 +43,7 @@ namespace classic_adapter
 		{
 			return (f_sensor_->SetTemperature(tem).GetFahrengheitTemp() - 32.) * 5 / 9 * +tem;
 		}
+
 	private:
 		FahrengheitSensor* f_sensor_ = nullptr;
 	};
@@ -67,6 +70,7 @@ namespace closed_inheritance
 		{
 			std::cout << "Made adjust" << std::endl;
 		}
+
 	private:
 		float tem_ = 32.;
 	};
@@ -83,10 +87,12 @@ namespace closed_inheritance
 	{
 	public:
 		Adapter() = default;
+
 		float GetTemperature(float t) override
 		{
 			return (SetTemperature(t).GetFahrenheitTemperature() - 32.) * 5 / 9;
 		}
+
 		void Adjust() override
 		{
 			return FahrenheitSensor::Adjust();

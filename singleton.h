@@ -25,6 +25,8 @@ public:
 	
 protected:	
 	Singleton();
+	Singleton(const Singleton&) = delete;
+	Singleton operator=(const Singleton&) = delete;
 	~Singleton() {};
 	friend class SingletonDestroyer;
 private:
@@ -71,7 +73,7 @@ public:
 	void MakeTea(double v);
 
 private:
-	double volume_;
+	double volume_ = 0.;
 	double AddWater(double v);	
 };
 

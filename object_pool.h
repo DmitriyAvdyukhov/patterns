@@ -12,6 +12,7 @@ class ObjectPoolDestroyer
 {
 private:
 	ObjectPool<Type>* p_instance_;
+
 public:
 	~ObjectPoolDestroyer()
 	{
@@ -22,6 +23,7 @@ public:
 		p_instance_ = p_instance;
 	}
 };
+
 template<class Type>
 class ObjectPool
 {
@@ -84,6 +86,7 @@ public:
 		return objects_.end();
 	}
 };
+
 template<class Type>
 ObjectPool<Type>* ObjectPool<Type>::instance_pool_ = nullptr;
 
