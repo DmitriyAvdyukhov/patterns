@@ -152,8 +152,8 @@ void TestBuilder()
 	Director dir;
 	RomanArmyBuilder roman;
 	CarthagenArmyBuilder carthagen;
-	std::shared_ptr<Army> roman_army = dir.CreateArmy(roman);
-	std::shared_ptr<Army> carthagen_army = dir.CreateArmy(carthagen);
+	std::shared_ptr<builder::Army> roman_army = dir.CreateArmy(roman);
+	std::shared_ptr<builder::Army> carthagen_army = dir.CreateArmy(carthagen);
 	std::cout << "Roman army: ";
 	roman_army->Info();
 	std::cout << "Carthagen army: ";
