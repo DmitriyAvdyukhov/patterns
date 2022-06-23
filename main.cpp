@@ -7,6 +7,7 @@
 #include "adapter_wrapper.h"
 #include "prototype.h"
 #include "decorator.h"
+#include "fasade.h"
 
 int main()
 {
@@ -16,6 +17,7 @@ int main()
 	TestObjectPool();
 	TestAdapter();
 	TestPrototype();*/
-	TestDecorator();
+	//TestDecorator();
+	TestFasade();
 	return 0;
 }
