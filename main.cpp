@@ -1,16 +1,19 @@
 #include <iostream>
 
-#include "singleton.h"
-#include "factory_method.h"
-#include "builder.h"
-#include "object_pool.h"
-#include "adapter_wrapper.h"
-#include "prototype.h"
-#include "decorator.h"
-#include "fasade.h"
+#include "generative/singleton.h"
+#include "generative/factory_method.h"
+#include "generative/object_pool.h"
+#include "generative/prototype.h"
+#include "generative/abstract_factory.h"
+
+#include "structural/adapter_wrapper.h"
+#include "structural/decorator.h"
+#include "structural/builder.h"
+#include "structural/fasade.h"
 
 int main()
 {
+	TestAbstractFactory();
 	/*TestSingleton();
 	TestFactoryMethod();
 	TestBuilder();
@@ -18,6 +21,6 @@ int main()
 	TestAdapter();
 	TestPrototype();*/
 	//TestDecorator();
-	TestFasade();
+	//TestFasade();
 	return 0;
 }

@@ -1,5 +1,5 @@
 #pragma once
-#include "factory_method.h"
+#include "generative/factory_method.h"
 
 namespace builder
 {
@@ -9,44 +9,64 @@ namespace builder
 	public:
 		void Info() const
 		{
-			std::cout << "Infantrymans: " << infantrymen_.size() << " count "
-				<< "Archers: " << archers_.size() << " count "
-				<< "Horsemen: " << horsemen_.size() << " count "
-				<< "Catapults: " << catapults_.size() << " count "
-				<< "Elephants: " << elephants_.size() << " count" << std::endl;
+			std::cout << "Infantrymans: " << infantrymen_.size() << " count " << std::endl;
+			for (const auto& warrior : infantrymen_)
+			{
+				warrior->Info();
+			}
+			std::cout << "Archers: " << archers_.size() << " count " << std::endl;
+			for (const auto& warrior : archers_)
+			{
+				warrior->Info();
+			}
+			std::cout << "Horsemen: " << horsemen_.size() << " count " << std::endl;
+			for (const auto& warrior : horsemen_)
+			{
+				warrior->Info();
+			}
+			std::cout << "Catapults: " << catapults_.size() << " count " << std::endl;
+			for (const auto& warrior : catapults_)
+			{
+				warrior->Info();
+			}
+			std::cout << "Elephants: " << elephants_.size() << " count" << std::endl;
+			for (const auto& warrior : elephants_)
+			{
+				warrior->Info();
+			}
 		}
 
-		std::vector<Infantryman>& GetInfantrymans()
+		std::vector<std::shared_ptr<Infantryman>>& GetInfantrymans()
 		{
 			return infantrymen_;
 		}
 
-		std::vector<Archer>& GetArchers()
+		std::vector<std::shared_ptr<Archer>>& GetArchers()
 		{
 			return archers_;
 		}
 
-		std::vector<Horseman>& GetHosemen()
+		std::vector<std::shared_ptr<Horseman>>& GetHorsemen()
 		{
 			return horsemen_;
 		}
 
-		std::vector<Catapult>& GetCatapults()
+		std::vector<std::shared_ptr<Catapult>>& GetCatapults()
 		{
 			return catapults_;
 		}
 
-		std::vector<Elephant>& GetElephants()
+		std::vector<std::shared_ptr<Elephant>>& GetElephants()
 		{
 			return elephants_;
 		}
 
 	private:
-		std::vector<Infantryman> infantrymen_;
-		std::vector<Archer> archers_;
-		std::vector<Horseman> horsemen_;
-		std::vector<Catapult> catapults_;
-		std::vector<Elephant> elephants_;
+		std::vector<std::shared_ptr<Infantryman>> infantrymen_;
+		std::vector<std::shared_ptr<Archer>> archers_;
+		std::vector<std::shared_ptr<Horseman>> horsemen_;
+		std::vector<std::shared_ptr<Catapult>> catapults_;
+		std::vector<std::shared_ptr<Elephant>> elephants_;
 	};
 
 	class ArmyBuilder
@@ -80,22 +100,22 @@ namespace builder
 
 		void CreateInfantryman() override
 		{
-			army_ptr_->GetInfantrymans() = { 10, Infantryman() };
+			army_ptr_->GetInfantrymans() = { 10, std::make_shared <Infantryman>() };
 		}
 
 		void CreateArcher() override
 		{
-			army_ptr_->GetArchers() = { 10, Archer() };
+			army_ptr_->GetArchers() = { 10, std::make_shared <Archer>() };
 		}
 
 		void CreateHorseman() override
 		{
-			army_ptr_->GetHosemen() = { 10, Horseman() };
+			army_ptr_->GetHorsemen() = { 10, std::make_shared <Horseman>() };
 		}
 
 		void CreateCatapult() override
 		{
-			army_ptr_->GetCatapults() = { 5, Catapult() };
+			army_ptr_->GetCatapults() = { 5, std::make_shared<Catapult>() };
 		}
 	};
 
@@ -109,22 +129,22 @@ namespace builder
 
 		void CreateInfantryman() override
 		{
-			army_ptr_->GetInfantrymans() = { 10, Infantryman() };
+			army_ptr_->GetInfantrymans() = { 10, std::make_shared <Infantryman>() };
 		}
 
 		void CreateArcher() override
 		{
-			army_ptr_->GetArchers() = { 10, Archer() };
+			army_ptr_->GetArchers() = { 10, std::make_shared <Archer>() };
 		}
 
 		void CreateHorseman() override
 		{
-			army_ptr_->GetHosemen() = { 5, Horseman() };
+			army_ptr_->GetHorsemen() = { 5, std::make_shared <Horseman>() };
 		}
 
 		void CreateElephant() override
 		{
-			army_ptr_->GetElephants() = { 5, Elephant() };
+			army_ptr_->GetElephants() = { 5, std::make_shared <Elephant>() };
 		}
 	};
 
