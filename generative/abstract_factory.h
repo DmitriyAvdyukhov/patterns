@@ -1,7 +1,7 @@
 #pragma once
 #include <memory>
 #include <iostream>
-#include "./structural/builder.h"
+#include "./generative/builder.h"
 
 namespace abstract_factory
 {
@@ -64,7 +64,6 @@ namespace abstract_factory
 		}
 	};
 
-
 	class ArmyFactory
 	{
 	public:
@@ -74,8 +73,39 @@ namespace abstract_factory
 		virtual ~ArmyFactory() {}
 	};
 
+	class DestroyerArmyFactory
+	{
+	public:
+		DestroyerArmyFactory() = default;
+
+		~DestroyerArmyFactory()
+		{
+			delete p_;
+		}
+
+		void Initiliaze(ArmyFactory* army)
+		{
+			p_ = army;
+		}
+
+	private:
+		ArmyFactory* p_ = nullptr;
+	};
+
 	class RomanArmyFactory : public ArmyFactory
 	{
+	public:
+
+		static RomanArmyFactory* Intance()
+		{
+			if (!intance_)
+			{
+				intance_ = new RomanArmyFactory();
+			}
+			destroyer_.Initiliaze(intance_);
+			return intance_;
+		}
+
 		std::shared_ptr<factory::Infantryman> CreateInfantryman() override
 		{
 			return std::make_shared<RomanInfantryman>(RomanInfantryman());
@@ -91,11 +121,27 @@ namespace abstract_factory
 			return std::make_shared<RomanHorseman>(RomanHorseman());
 		}
 
+	private:
+		RomanArmyFactory() = default;
+		static RomanArmyFactory* intance_;
+		static DestroyerArmyFactory destroyer_ ;
 	};
 
 
 	class CarthaginianArmyFactory : public ArmyFactory
 	{
+	public:
+
+		static CarthaginianArmyFactory* Intance()
+		{
+			if (!intance_)
+			{
+				intance_ = new CarthaginianArmyFactory;
+			}
+			destroyer_.Initiliaze(intance_);
+			return intance_;
+		}
+
 		std::shared_ptr<factory::Infantryman> CreateInfantryman() override
 		{
 			return std::make_shared<CarthaginianInfantryman>(CarthaginianInfantryman());
@@ -111,9 +157,13 @@ namespace abstract_factory
 			return std::make_shared<CarthaginianHorseman>(CarthaginianHorseman());
 		}
 
+	private:
+		CarthaginianArmyFactory() = default;
+		static CarthaginianArmyFactory* intance_;
+		static DestroyerArmyFactory destroyer_;
 	};
 
-	class builder::Army;
+	//  class builder::Army from builder.h
 
 	class Game
 	{
@@ -127,19 +177,25 @@ namespace abstract_factory
 			return p;
 		}
 	};
-}
+
+	RomanArmyFactory* RomanArmyFactory::intance_;
+	DestroyerArmyFactory RomanArmyFactory::destroyer_;
+	CarthaginianArmyFactory* CarthaginianArmyFactory::intance_;
+	DestroyerArmyFactory CarthaginianArmyFactory::destroyer_;
+
+}// end namespace abstract_factory
+
 
 void TestAbstractFactory()
 {
 	using namespace abstract_factory;
 	Game game;
-	RomanArmyFactory roman;
-	CarthaginianArmyFactory carthaginian;
-	std::shared_ptr<builder::Army> r_army = game.CreateArmy(roman);
-	std::shared_ptr<builder::Army> car_army = game.CreateArmy(carthaginian);
+	RomanArmyFactory* roman = RomanArmyFactory::Intance();
+	CarthaginianArmyFactory* carthaginian = CarthaginianArmyFactory::Intance();
+	std::shared_ptr<builder::Army> r_army = game.CreateArmy(*roman);
+	std::shared_ptr<builder::Army> car_army = game.CreateArmy(*carthaginian);
 	std::cout << "Roman army:" << std::endl;
 	r_army->Info();
 	std::cout << "\nCarthaginian army:" << std::endl;
-	car_army->Info();
-	
+	car_army->Info();	
 }
