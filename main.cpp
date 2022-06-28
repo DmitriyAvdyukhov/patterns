@@ -10,6 +10,7 @@
 #include "structural/fasade.h"
 
 #include "behavior/visitor.h"
+#include "behavior/obsever.h"
 
 int main()
 {
@@ -27,7 +28,8 @@ int main()
 	//TestFasade();
 
 	//-----------behavior------------
-	TestVisitor();
+	//TestVisitor();
+	TestObserver();
 
 	return 0;
 }
