@@ -11,6 +11,8 @@
 
 #include "behavior/visitor.h"
 #include "behavior/obsever.h"
+#include "behavior/chain_of_responsibility.h"
+#include "behavior/mediator.h"
 
 int main()
 {
@@ -29,7 +31,8 @@ int main()
 
 	//-----------behavior------------
 	//TestVisitor();
-	TestObserver();
-
+	//TestObserver();
+	//TestChainOfResponsibility();
+	TestMediator();
 	return 0;
 }
