@@ -29,10 +29,10 @@ int main()
 	//TestDecorator();
 	//TestFasade();
 
-	//-----------behavior------------
+	////-----------behavior------------
 	//TestVisitor();
 	//TestObserver();
 	//TestChainOfResponsibility();
-	TestMediator();
+	//TestMediator();
 	return 0;
 }

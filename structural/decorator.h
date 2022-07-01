@@ -3,7 +3,7 @@
 #include <memory>
 
 
-namespace decor
+namespace decorator
 {
 	class I
 	{
@@ -187,7 +187,8 @@ namespace decor
 			std::cout << "  ScrollDecorator" << std::endl;
 		}
 	};
-}
+
+}// end namespace
 
 
 
@@ -195,7 +196,7 @@ namespace decor
 
 void TestDecorator()
 {
-	using namespace decor;
+	using namespace decorator;
 	std::shared_ptr<I> w_decor_wapper = std::make_shared<DecorWrapper>(std::make_shared<A>());
 	std::shared_ptr<I> w_decor_wapper_w_function = std::make_shared<DecorWrapper>(std::make_shared<Function>(std::make_shared<A>()));
 	std::shared_ptr<I> w_decor_wapper_w_function_w_template 
@@ -224,4 +225,5 @@ void TestDecorator()
 				std::make_shared<BordeDecorator>(
 					std::make_shared<Cyrcle>(p, 20))));
 	widget_c->Draw();
+	std::cout << "Test Decorator is Ok" << std::endl;
 }

@@ -1,114 +1,118 @@
 #include "singleton.h"
 
-//------------Singleton---------------
-
-Singleton* Singleton::instance_ = nullptr; //реализация static поля
-SingletonDestroyer Singleton::destroyer_;  //реализация static поля
-
-SingletonDestroyer::~SingletonDestroyer()
-{	
-	delete p_instance_;
-}
-
-void SingletonDestroyer::Initialize(Singleton* singleton)
+namespace singleton
 {
-	p_instance_ = singleton;
-}
+	//------------Singleton---------------
 
-Singleton* Singleton::Instance()
-{
-	if (instance_ == nullptr)
+	Singleton* Singleton::instance_ = nullptr; //реализация static поля
+	SingletonDestroyer Singleton::destroyer_;  //реализация static поля
+
+	SingletonDestroyer::~SingletonDestroyer()
 	{
-		instance_ = new Singleton();
+		delete p_instance_;
 	}
-	destroyer_.Initialize(instance_);
-	return instance_;
-}
 
-std::string Singleton::GetName() const
-{
-	return name_;
-}
-
-Singleton::Singleton()
-{
-	name_ = "User";
-}
-
-//--------------WaterSpring-----------------
-
-WaterSpringDestroyer WaterSpring::w_destroy_;  //реализация static поля
-WaterSpring* WaterSpring::w_instance_ = nullptr;  //реализация static поля
-
-WaterSpring* WaterSpring::Instance()
-{
-	if (!w_instance_)
+	void SingletonDestroyer::Initialize(Singleton* singleton)
 	{
-		w_instance_ = new WaterSpring();
+		p_instance_ = singleton;
 	}
-	w_destroy_.Initialize(w_instance_);
-	return w_instance_;
-}
 
-
-
-WaterSpringDestroyer::~WaterSpringDestroyer()
-{
-	delete w_;
-}
-
-void WaterSpringDestroyer::Initialize(WaterSpring* water_spring)
-{
-	w_ = water_spring;
-}
-
-WaterSpring::WaterSpring()
-{
-	max_water_ = 21;
-}
-
-double WaterSpring::GetMaxWater() const
-{
-	return max_water_;
-}
-
-double WaterSpring::GetWater(double v)
-{
-	if (max_water_ - v >= 0)
+	Singleton* Singleton::Instance()
 	{
-		max_water_ -= v;
-		return v;
+		if (instance_ == nullptr)
+		{
+			instance_ = new Singleton();
+		}
+		destroyer_.Initialize(instance_);
+		return instance_;
 	}
-	return 0;
-}
 
-Teapot::Teapot(double v)
-	: volume_(v)
-{}
-
-void Teapot::MakeTea(double v)
-{
-	if (double w = AddWater(v); w)
+	std::string Singleton::GetName() const
 	{
-		std::cout << "The tespot with " << w << " water" << std::endl;
+		return name_;
 	}
-	else
+
+	Singleton::Singleton()
 	{
-		std::cout << "Can't add water" << std::endl;
+		name_ = "User";
 	}
-}
 
-double Teapot::AddWater(double v)
-{
-	WaterSpring* intance = WaterSpring::Instance();
-	return intance->GetWater(v);
-}
+	//--------------WaterSpring-----------------
+
+	WaterSpringDestroyer WaterSpring::w_destroy_;  //реализация static поля
+	WaterSpring* WaterSpring::w_instance_ = nullptr;  //реализация static поля
+
+	WaterSpring* WaterSpring::Instance()
+	{
+		if (!w_instance_)
+		{
+			w_instance_ = new WaterSpring();
+		}
+		w_destroy_.Initialize(w_instance_);
+		return w_instance_;
+	}
 
 
 
-std::map<std::string, Multiton*> Multiton::instances_;
+	WaterSpringDestroyer::~WaterSpringDestroyer()
+	{
+		delete w_;
+	}
+
+	void WaterSpringDestroyer::Initialize(WaterSpring* water_spring)
+	{
+		w_ = water_spring;
+	}
+
+	WaterSpring::WaterSpring()
+	{
+		max_water_ = 21;
+	}
+
+	double WaterSpring::GetMaxWater() const
+	{
+		return max_water_;
+	}
+
+	double WaterSpring::GetWater(double v)
+	{
+		if (max_water_ - v >= 0)
+		{
+			max_water_ -= v;
+			return v;
+		}
+		return 0;
+	}
+
+	Teapot::Teapot(double v)
+		: volume_(v)
+	{}
+
+	void Teapot::MakeTea(double v)
+	{
+		if (double w = AddWater(v); w)
+		{
+			std::cout << "The tespot with " << w << " water" << std::endl;
+		}
+		else
+		{
+			std::cout << "Can't add water" << std::endl;
+		}
+	}
+
+	double Teapot::AddWater(double v)
+	{
+		WaterSpring* intance = WaterSpring::Instance();
+		return intance->GetWater(v);
+	}
+	std::map<std::string, Multiton*> Multiton::instances_;
+
+}// end namespace
+
 void TestSingleton()
 {
+	using namespace singleton;
+
 	Singleton* s = Singleton::Instance();
 	{
 		Singleton* s1 = Singleton::Instance();

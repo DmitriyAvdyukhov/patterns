@@ -8,11 +8,12 @@
 namespace document
 {
 	class Document;
+
 	class Subscriber
 	{
 	public:
 		virtual ~Subscriber() {}
-		virtual void Update(Document* doc) = 0;
+		virtual void Update(const std::shared_ptr<Document>&) = 0;
 	};
 
 	class Document
@@ -55,7 +56,7 @@ namespace document
 		{
 			for (auto& view : views_)
 			{
-				view->Update(this);
+				view->Update(std::make_shared<Document>(*this));
 			}
 		}
 	};
@@ -84,7 +85,7 @@ namespace document
 		Author(const std::string& name)
 			: Person(name)
 		{}
-		void Update(Document* doc) override
+		void Update(const std::shared_ptr<Document>& doc) override
 		{
 			description_ = doc->GetDocument();
 			PrintMessage();
@@ -107,7 +108,7 @@ namespace document
 			: Person(name)
 		{}
 
-		void Update(Document* doc)
+		void Update(const std::shared_ptr<Document>& doc)
 		{
 			id_ = doc->GetId();
 			PrintMessage();
@@ -199,7 +200,8 @@ namespace number
 	private:
 		int mod_ = 0;
 	};
-}
+
+}// end namespace
 
 
 

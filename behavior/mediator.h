@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <memory>
 
 namespace mediator
 {
@@ -79,7 +80,7 @@ namespace mediator
 	{
 	public:
 		ConcreteTaxi() = delete;
-		ConcreteTaxi(const std::string& name, const std::string& status, bool busy, Mediator* mediator)
+		ConcreteTaxi(const std::string& name, const std::string& status, bool busy, std::shared_ptr<Mediator> mediator)
 			: Taxi(name), status_(status), busy_(busy), mediator_(mediator)
 		{}
 
@@ -122,7 +123,7 @@ namespace mediator
 	private:
 		std::string status_{};
 		bool busy_ = false;
-		Mediator* mediator_;
+		std::shared_ptr<Mediator> mediator_;
 	};
 
 	class ConcreteMediator : public Mediator
@@ -147,16 +148,20 @@ namespace mediator
 			}
 		}
 
-		ConcreteMediator& Add(Taxi* taxi)
+		ConcreteMediator& Add(std::shared_ptr<Taxi> taxi)
 		{
-			taxis_.push_back(taxi);
+			if (taxi)
+			{
+				taxis_.push_back(taxi);
+			}
 			return *this;
 		}
 
 	private:
-		std::vector<Taxi*> taxis_;
+		std::vector<std::shared_ptr<Taxi>> taxis_;
 	};
-}
+
+}// end namespace
 
 void TestMediator()
 {
@@ -166,16 +171,16 @@ void TestMediator()
 	Trip trip1(false, { "qwe", "23" });
 	Trip trip2(false, { "zxc", "23" });
 	Trip trip3(false, { "fgh", "23" });
-	ConcreteMediator mediator;
-	ConcreteTaxi taxi_1("Ivan", "Free", false, &mediator);
-	ConcreteTaxi taxi_2("Petr", "Busy", true, &mediator);
-	ConcreteTaxi taxi_3("Andrey", "Free", false, &mediator);
-	ConcreteTaxi taxi_4("Dmitriy", "Free", false, &mediator);
-	ConcreteTaxi taxi_5("Alex", "Free", true, &mediator);
-	mediator.Add(&taxi_1).Add(&taxi_2).Add(&taxi_3).Add(&taxi_4).Add(&taxi_5);	
-	taxi_1.AssignTrip(trip);
-	taxi_1.AssignTrip(trip1);
-	taxi_2.AssignTrip(trip2);
-	taxi_1.SetFree();
-	taxi_2.AssignTrip(trip3);
+	std::shared_ptr<ConcreteMediator> mediator = std::make_shared<ConcreteMediator>();
+	std::shared_ptr <ConcreteTaxi> taxi_1 = std::make_shared<ConcreteTaxi>("Ivan", "Free", false, mediator);
+	std::shared_ptr <ConcreteTaxi> taxi_2 = std::make_shared<ConcreteTaxi>("Petr", "Busy", true, mediator);
+	std::shared_ptr <ConcreteTaxi> taxi_3 = std::make_shared<ConcreteTaxi>("Andrey", "Free", false, mediator);
+	std::shared_ptr <ConcreteTaxi> taxi_4 = std::make_shared<ConcreteTaxi>("Dmitriy", "Free", false, mediator);
+	std::shared_ptr <ConcreteTaxi> taxi_5 = std::make_shared<ConcreteTaxi>("Alex", "Free", true, mediator);
+	mediator->Add(taxi_1).Add(taxi_2).Add(taxi_3).Add(taxi_4).Add(taxi_5);	
+	taxi_1->AssignTrip(trip);
+	taxi_1->AssignTrip(trip1);
+	taxi_2->AssignTrip(trip2);
+	taxi_1->SetFree();
+	taxi_2->AssignTrip(trip3);
 }

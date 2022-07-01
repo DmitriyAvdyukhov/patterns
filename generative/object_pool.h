@@ -4,97 +4,102 @@
 #include <cassert>
 #include <list>
 
-template<class Type>
-class ObjectPool;
-
-template<class Type>
-class ObjectPoolDestroyer
+namespace object_pool
 {
-private:
-	ObjectPool<Type>* p_instance_;
+	template<class Type>
+	class ObjectPool;
 
-public:
-	~ObjectPoolDestroyer()
+	template<class Type>
+	class ObjectPoolDestroyer
 	{
-		delete p_instance_;
-	}
-	void Initiliaze(ObjectPool<Type>* p_instance)
-	{
-		p_instance_ = p_instance;
-	}
-};
+	private:
+		ObjectPool<Type>* p_instance_;
 
-template<class Type>
-class ObjectPool
-{
-private:	
-	static ObjectPool<Type>* instance_pool_;
-	static ObjectPoolDestroyer<Type> destroyer_;
-	std::list<Type> objects_;
-	size_t max_count_objects_ = 5;
-protected:
-	ObjectPool() = default;
-	~ObjectPool() = default;
-	friend class ObjectPoolDestroyer<Type>;
-public:
-	
-	 static ObjectPool<Type>* GetInstance()
-	{
-		if (!instance_pool_)
+	public:
+		~ObjectPoolDestroyer()
 		{
-			instance_pool_ = new ObjectPool<Type>();
+			delete p_instance_;
 		}
-		return instance_pool_;
-	}
-
-	void AddObject(const Type& obj)
-	{
-		if (objects_.size() < max_count_objects_)
+		void Initiliaze(ObjectPool<Type>* p_instance)
 		{
-			objects_.push_back(obj);
+			p_instance_ = p_instance;
 		}
-		else
+	};
+
+	template<class Type>
+	class ObjectPool
+	{
+	private:
+		static ObjectPool<Type>* instance_pool_;
+		static ObjectPoolDestroyer<Type> destroyer_;
+		std::list<Type> objects_;
+		size_t max_count_objects_ = 5;
+	protected:
+		ObjectPool() = default;
+		~ObjectPool() = default;
+		friend class ObjectPoolDestroyer<Type>;
+	public:
+
+		static ObjectPool<Type>* GetInstance()
 		{
-			throw std::logic_error("Object pool is full");
+			if (!instance_pool_)
+			{
+				instance_pool_ = new ObjectPool<Type>();
+			}
+			return instance_pool_;
 		}
-	}
 
-	template<class Iterator>
-	Type GetObject(Iterator it)
-	{
-		if (it != End())
+		void AddObject(const Type& obj)
 		{
-			Type temp = *it;
-			objects_.erase(it);
-			return temp;
+			if (objects_.size() < max_count_objects_)
+			{
+				objects_.push_back(obj);
+			}
+			else
+			{
+				throw std::logic_error("Object pool is full");
+			}
 		}
-		return {};
-	}
 
-	std::list<Type> GetObjectPool() 
-	{
-		return objects_;
-	}
+		template<class Iterator>
+		Type GetObject(Iterator it)
+		{
+			if (it != End())
+			{
+				Type temp = *it;
+				objects_.erase(it);
+				return temp;
+			}
+			return {};
+		}
 
-	auto Begin()
-	{
-		return objects_.begin();
-	}
+		std::list<Type> GetObjectPool() const
+		{
+			return objects_;
+		}
 
-	auto End()
-	{
-		return objects_.end();
-	}
-};
+		auto Begin() 
+		{
+			return objects_.begin();
+		}
 
-template<class Type>
-ObjectPool<Type>* ObjectPool<Type>::instance_pool_ = nullptr;
+		auto End()
+		{
+			return objects_.end();
+		}
+	};
 
-template<class Type>
-ObjectPoolDestroyer<Type> ObjectPool<Type>::destroyer_;
+	template<class Type>
+	ObjectPool<Type>* ObjectPool<Type>::instance_pool_ = nullptr;
+
+	template<class Type>
+	ObjectPoolDestroyer<Type> ObjectPool<Type>::destroyer_;
+
+} // end namespace
 
 void TestObjectPool()
 {
+	using namespace object_pool;
 	ObjectPool<std::string>* pool_ptr{ ObjectPool<std::string>::GetInstance() };
 	pool_ptr->AddObject("qwe");
 	pool_ptr->AddObject("asd");
