@@ -13,6 +13,7 @@
 #include "behavior/obsever.h"
 #include "behavior/chain_of_responsibility.h"
 #include "behavior/mediator.h"
+#include "behavior/strategy.h"
 
 int main()
 {
@@ -34,5 +35,6 @@ int main()
 	//TestObserver();
 	//TestChainOfResponsibility();
 	//TestMediator();
+	TestDiscountable();
 	return 0;
 }

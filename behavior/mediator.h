@@ -24,20 +24,27 @@ namespace mediator
 	class Trip
 	{
 	public:
-		Trip(bool assigned, Address address) : assigned_trip_(assigned), address_(address) {}
+		Trip(bool assigned, Address address)
+			: assigned_trip_(assigned), address_(address)
+		{}
+
 		Trip() = default;
+
 		bool AssignedTrip()
 		{
 			return assigned_trip_;
 		}
+
 		void SetAssignedTrip()
 		{
 			assigned_trip_ = true;
 		}
+
 		Address GetAddress() const
 		{
 			return address_;
 		}
+
 	private:
 		bool assigned_trip_ = false;
 		Address address_{};
@@ -80,6 +87,7 @@ namespace mediator
 	{
 	public:
 		ConcreteTaxi() = delete;
+
 		ConcreteTaxi(const std::string& name, const std::string& status, bool busy, std::shared_ptr<Mediator> mediator)
 			: Taxi(name), status_(status), busy_(busy), mediator_(mediator)
 		{}
