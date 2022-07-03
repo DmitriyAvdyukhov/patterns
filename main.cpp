@@ -14,27 +14,31 @@
 #include "behavior/chain_of_responsibility.h"
 #include "behavior/mediator.h"
 #include "behavior/strategy.h"
+#include "behavior/state.h"
+#include "behavior/command.h"
 
 int main()
 {
 	////-------generative-----------
-	//TestAbstractFactory();
-	//TestSingleton();
-	//TestFactoryMethod();
-	//TestPrototype();
-	//TestObjectPool();
+	TestAbstractFactory();
+	TestSingleton();
+	TestFactoryMethod();
+	TestPrototype();
+	TestObjectPool();
 
 	////----------structurial----------
-	//TestAdapter();	
-	//TestBuilder();	
-	//TestDecorator();
-	//TestFasade();
+	TestAdapter();	
+	TestBuilder();	
+	TestDecorator();
+	TestFasade();
 
 	////-----------behavior------------
-	//TestVisitor();
-	//TestObserver();
-	//TestChainOfResponsibility();
-	//TestMediator();
+	TestVisitor();
+	TestObserver();
+	TestChainOfResponsibility();
+	TestMediator();
 	TestDiscountable();
+	TestState();
+	TestCommand();
 	return 0;
 }
