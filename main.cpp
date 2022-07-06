@@ -16,29 +16,31 @@
 #include "behavior/strategy.h"
 #include "behavior/state.h"
 #include "behavior/command.h"
+#include "behavior/iterator.h"
 
 int main()
 {
-	////-------generative-----------
-	TestAbstractFactory();
-	TestSingleton();
-	TestFactoryMethod();
-	TestPrototype();
-	TestObjectPool();
+	//////-------generative-----------
+	//TestAbstractFactory();
+	//TestSingleton();
+	//TestFactoryMethod();
+	//TestPrototype();
+	//TestObjectPool();
 
-	////----------structurial----------
-	TestAdapter();	
-	TestBuilder();	
-	TestDecorator();
-	TestFasade();
+	//////----------structurial----------
+	//TestAdapter();	
+	//TestBuilder();	
+	//TestDecorator();
+	//TestFasade();
 
-	////-----------behavior------------
-	TestVisitor();
-	TestObserver();
-	TestChainOfResponsibility();
-	TestMediator();
-	TestDiscountable();
-	TestState();
-	TestCommand();
+	//////-----------behavior------------
+	//TestVisitor();
+	//TestObserver();
+	//TestChainOfResponsibility();
+	//TestMediator();
+	//TestDiscountable();
+	//TestState();
+	//TestCommand();
+	TestIterator();
 	return 0;
 }
